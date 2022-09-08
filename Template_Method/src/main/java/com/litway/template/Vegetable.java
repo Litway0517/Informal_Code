@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 public abstract class Vegetable {
 
 
-    public void cookvegetable() {
+    public void cookVegetable() {
         log.info("炒菜的一般做法...");
         this.pourOil();
         this.headOil();

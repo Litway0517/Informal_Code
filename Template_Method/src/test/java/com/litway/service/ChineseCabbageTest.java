@@ -7,6 +7,6 @@ public class ChineseCabbageTest {
     @Test
     public void pourVegetable() {
         ChineseCabbage chineseCabbage = new ChineseCabbage();
-        chineseCabbage.cookvegetable();
+        chineseCabbage.cookVegetable();
     }
 }

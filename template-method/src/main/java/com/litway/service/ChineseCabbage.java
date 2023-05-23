@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ChineseCabbage extends Vegetable {
 
+    @Override
     public void pourVegetable() {
         log.info("加入 大白菜...");
     }

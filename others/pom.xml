@@ -11,7 +11,7 @@
 	</parent>
 
 	<groupId>com.study</groupId>
-	<artifactId>Others</artifactId>
+	<artifactId>others</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Others</name>
 	<description>Others</description>

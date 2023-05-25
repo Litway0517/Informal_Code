@@ -39,6 +39,7 @@
     <modules>
         <module>others</module>
         <module>template-method</module>
+        <module>http</module>
     </modules>
 
     <properties>
@@ -57,6 +58,7 @@
         <alibaba.nacos.version>2.2.0</alibaba.nacos.version>
         <hutool.version>5.8.5</hutool.version>
         <easyexcel.version>3.1.1</easyexcel.version>
+        <mysql-version>8.0.30</mysql-version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <mybatis-plus-join.version>1.4.4</mybatis-plus-join.version>
         <jjwt.version>0.9.1</jjwt.version>
@@ -102,6 +104,11 @@
                 <groupId>com.alibaba.nacos</groupId>
                 <artifactId>nacos-client</artifactId>
                 <version>${alibaba.nacos.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-version}</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>

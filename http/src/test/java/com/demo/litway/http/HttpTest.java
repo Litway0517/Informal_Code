@@ -2,10 +2,13 @@ package com.demo.litway.http;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONUtil;
+import com.demo.litway.pojo.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 /**
  * @author Litway
@@ -32,6 +35,26 @@ public class HttpTest {
                 .execute().body();
 
         System.out.println(JSONUtil.toJsonPrettyStr(body));
+    }
+
+    @Test
+    public void testJson() {
+        UserQuery userQuery = new UserQuery();
+        userQuery.setPageNum(1);
+        userQuery.setPageSize(10);
+
+        String json = JSONUtil.toJsonStr(userQuery);
+        System.out.println(json);
+
+        String prettyJson = JSONUtil.toJsonPrettyStr(userQuery);
+        System.out.println(prettyJson);
+
+        ArrayList<String> list = new ArrayList<>();
+        list.add("fcusid");
+        list.add("fnumber");
+        String s = list.stream().map(Object::toString).collect(Collectors.joining(","));
+
+        System.out.println(s);
     }
 
 }

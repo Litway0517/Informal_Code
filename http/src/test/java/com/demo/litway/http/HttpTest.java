@@ -57,4 +57,30 @@ public class HttpTest {
         System.out.println(s);
     }
 
+    @Test
+    public void testQuery() {
+        OrderParams orderParams = new OrderParams();
+        OrderQuery orderQuery = new OrderQuery();
+        orderParams.setFormId("order");
+
+        ArrayList<String> list = new ArrayList<>();
+        list.add("fcusid");
+        list.add("fnumber");
+        String s = list.stream().map(Object::toString).collect(Collectors.joining(","));
+        orderParams.setFieldKeys(s);
+
+        orderParams.setTopRowCount(10);
+        orderParams.setLimit(10);
+        orderParams.setStartRow(0);
+        orderParams.setFilterString("");
+        orderParams.setOrderString("");
+
+        ArrayList<OrderParams> params = new ArrayList<>();
+        params.add(orderParams);
+        orderQuery.setParameters(params);
+
+        String json = JSONUtil.toJsonPrettyStr(orderQuery);
+        System.out.println(json);
+    }
+
 }

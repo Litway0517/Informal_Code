@@ -1,5 +1,6 @@
 package com.demo.litway.http;
 
+import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONUtil;
 import com.demo.litway.pojo.*;
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 public class HttpTest {
 
     private String url = "http://172.31.151.142/dev-api/system/user/list?pageNum=1&pageSize=10";
+
+    private String kingUrl = "http://10.1.9.43/k3cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.ExecuteBillQuery.common.kdsvc";
 
     private String token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX2tleSI6ImNlZTg1N2M2LTI5OTktNGY3Zi1hNTg3LTMxNTcwZjY2MTMwYiIsInVzZXJuYW1lIjoiYWRtaW4ifQ.7Z4EhyrqWB-4yobrHoY8LGu0oH9Y4RGfD0aC0XV7vZPNiTrBihZmQMEvkjRJkv_4-7hEIb5yM0gYjWRi9paeoA";
 
@@ -81,6 +84,34 @@ public class HttpTest {
 
         String json = JSONUtil.toJsonPrettyStr(orderQuery);
         System.out.println(json);
+    }
+
+    @Test
+    public void testApi() {
+        OrderParams orderParams = new OrderParams();
+        orderParams.setFormId("order");
+
+        ArrayList<String> list = new ArrayList<>();
+        list.add("fcusid");
+        list.add("fnumber");
+        String s = list.stream().map(Object::toString).collect(Collectors.joining(","));
+        orderParams.setFieldKeys(s);
+
+        orderParams.setTopRowCount(10);
+        orderParams.setStartRow(0);
+
+        String json = JSONUtil.toJsonStr(orderParams);
+
+        String body = HttpRequest.post(kingUrl)
+                .header(Header.ACCEPT_ENCODING, "gzip, deflate, br")
+                .header(Header.CONTENT_TYPE, "text/json")
+                .header(Header.COOKIE, "ASP.NET_SessionId=edkceb4y0s4cjqcy5jwfry43; Theme=standard; kdservice-sessionid=a3b2f7a5-76c3-4e3b-b6b8-2e329f8ef8c9")
+                .header("Csrf-Token", "R0xqSGl5JjNhMWQ1N2MzYzVhMjRlMjUmMTY4NDQ4ODM5MzU3Mg==")
+                .header("Kdbiz-Info", "{\"m\":\"MainBarItemClick\",\"t\":\"SAL_SaleOrder\",\"s\":\"ListService\"}")
+                .header(Header.USER_AGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
+                .body(json)
+                .execute().body();
+        System.out.println(body);
     }
 
 }

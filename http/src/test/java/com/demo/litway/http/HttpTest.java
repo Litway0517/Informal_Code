@@ -2,13 +2,13 @@ package com.demo.litway.http;
 
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.demo.litway.pojo.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -21,6 +21,8 @@ public class HttpTest {
     private String url = "http://172.31.151.142/dev-api/system/user/list?pageNum=1&pageSize=10";
 
     private String kingUrl = "http://10.1.9.43/k3cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.ExecuteBillQuery.common.kdsvc";
+
+    private String webApiLogin = "http://10.1.9.43/k3cloud/Kingdee.BOS.WebApi.ServicesStub.AuthService.ValidateUser.common.kdsvc";
 
     private String token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX2tleSI6ImNlZTg1N2M2LTI5OTktNGY3Zi1hNTg3LTMxNTcwZjY2MTMwYiIsInVzZXJuYW1lIjoiYWRtaW4ifQ.7Z4EhyrqWB-4yobrHoY8LGu0oH9Y4RGfD0aC0XV7vZPNiTrBihZmQMEvkjRJkv_4-7hEIb5yM0gYjWRi9paeoA";
 
@@ -112,6 +114,21 @@ public class HttpTest {
                 .body(json)
                 .execute().body();
         System.out.println(body);
+    }
+
+    @Test
+    public void testGet() {
+        HashMap<String, Object> paramMap = new HashMap<>();
+
+        ArrayList<String> list = new ArrayList<>();
+        list.add("fcusid");
+        list.add("fnumber");
+        String s = list.stream().map(Object::toString).collect(Collectors.joining(","));
+        paramMap.put("FieldKeys", s);
+
+        String s1 = HttpUtil.get(kingUrl, paramMap);
+        System.out.println(s1);
+
     }
 
 }

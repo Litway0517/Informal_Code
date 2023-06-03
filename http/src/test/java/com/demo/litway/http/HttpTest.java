@@ -1,7 +1,10 @@
 package com.demo.litway.http;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.lang.TypeReference;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.demo.litway.pojo.*;
@@ -128,6 +131,92 @@ public class HttpTest {
 
         String s1 = HttpUtil.get(kingUrl, paramMap);
         System.out.println(s1);
+
+    }
+
+    @Test
+    public void testWebApiLogin() {
+        LoginQuery loginQuery = new LoginQuery();
+        loginQuery.setAcctId("6466e44dde6a23");
+        loginQuery.setUsername("Administrator");
+        loginQuery.setPassword("123456Aa!");
+        loginQuery.setLcid(2052);
+
+        OrderParams orderParams = new OrderParams();
+        OrderQuery orderQuery = new OrderQuery();
+        orderParams.setFormId("SAL_SaleOrder");
+
+        ArrayList<String> list = new ArrayList<>();
+        list.add("FID");
+        list.add("FSaleOrderEntry_FEntryID");
+        list.add("FBillNo");
+        list.add("FMaterialId.Fnumber");
+        list.add("FMaterialName");
+        list.add("FCreatorId.FName");
+        list.add("FModifierId.FName");
+        list.add("FModifyDate");
+        list.add("FApproverId.FName");
+        list.add("FApproveDate");
+        list.add("FBaseUnitId.FNumber");
+        String s = list.stream().map(Object::toString).collect(Collectors.joining(","));
+        orderParams.setFieldKeys(s);
+
+        orderParams.setTopRowCount(10);
+        orderParams.setLimit(10);
+        orderParams.setStartRow(0);
+        orderParams.setFilterString("");
+        orderParams.setOrderString("");
+
+        ArrayList<OrderParams> params = new ArrayList<>();
+        params.add(orderParams);
+        orderQuery.setParameters(params);
+
+        String orderQueryJson = JSONUtil.toJsonPrettyStr(orderQuery);
+        System.out.println(orderQueryJson);
+
+        String loginQueryJson = JSONUtil.toJsonStr(loginQuery);
+
+        /* System.setProperty("jdk.http.auth.tunneling.disabledSchemes", "");
+        Authenticator.setDefault(new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("dj-vpn03", "DJ@123456".toCharArray());
+            }
+        });
+        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("60.30.84.218", 11443)); */
+
+        HttpResponse loginResponse = HttpRequest.post(webApiLogin).body(loginQueryJson).execute();
+        loginResponse.close();
+        String post = loginResponse.body();
+        System.out.println(post);
+
+        LoginResponse bean = JSONUtil.toBean(post, LoginResponse.class);
+
+        if (bean.getLoginResultType().equals(1)) {
+            System.out.println("登陆成功");
+            HttpResponse queryResponse = HttpRequest.post(kingUrl)
+                    .cookie(loginResponse.getCookies())
+                    .body(orderQueryJson)
+                    .execute();
+            String body = queryResponse.body();
+            System.out.println(body);
+
+            String substring = body.substring(1, body.length() - 1);
+            String substring1 = substring.substring(1, substring.length() - 1);
+            List<String> split = Arrays.asList(substring1.split("],\\["));
+            List<List<Object>> collect = split.stream().map(item -> {
+                return Convert.convert(new TypeReference<List<Object>>() {}, item);
+            }).collect(Collectors.toList());
+
+            List<OrderQueryResponse> orderQueryResponseList = split.stream().map(item -> {
+                OrderQueryResponse orderQueryResponse = new OrderQueryResponse();
+                orderQueryResponse.setOrderItems(Convert.convert(new TypeReference<List<Object>>() {
+                }, item));
+                return orderQueryResponse;
+            }).collect(Collectors.toList());
+
+            System.out.println(split);
+        }
 
     }
 

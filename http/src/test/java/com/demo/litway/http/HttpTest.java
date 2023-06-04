@@ -220,4 +220,19 @@ public class HttpTest {
 
     }
 
+    @Test
+    public void testJsonToBean() {
+        LoginQuery loginQuery = new LoginQuery();
+        loginQuery.setAcctId("6466e44dde6a23");
+        loginQuery.setUsername("Administrator");
+        loginQuery.setPassword("123456Aa!");
+        loginQuery.setLcid(2052);
+
+        String str = JSONUtil.toJsonStr(loginQuery);
+        System.out.println(str);
+
+        LoginQuery bean = JSONUtil.toBean(str, LoginQuery.class);
+        System.out.println(bean);
+    }
+
 }

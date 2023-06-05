@@ -235,4 +235,13 @@ public class HttpTest {
         System.out.println(bean);
     }
 
+    @Test
+    public void testSplit() {
+        String str = "[[100004],[100004,\"XSDD000001\",\"C01半羊毛-0001\",\"平机半羊毛\",\"周艳姣\",\"周艳姣\",\"2023-05-19T17:10:10.92\",\"周艳姣\",\"2023-05-19T17:12:13.263\",\"m\"],[100005,100005,\"XSDD000002\",\"C01超细-0001\",\"平机超细白\",\"周艳姣\",\"周艳姣\",\"2023-05-26T11:12:41.59\",null,null,\"m\"],[100005,100008,\"XSDD000002\",\"C01半羊毛-0001\",\"平机半羊毛\",\"周艳姣\",\"周艳姣\",\"2023-05-26T11:12:41.59\",null,null,\"m\"],[100006,100006,\"XSDD000003\",\"C01半羊毛-0001\",\"平机半羊毛\",\"周艳姣\",\"周艳姣\",\"2023-05-26T10:50:23.883\",null,null,\"m\"],[100006,100007,\"XSDD000003\",\"C01超细-0001\",\"平机超细白\",\"周艳姣\",\"周艳姣\",\"2023-05-26T10:50:23.883\",null,null,\"m\"]]";
+        String substring = str.substring(1, str.length() - 1);
+        String substring1 = substring.substring(1, substring.length() - 1);
+        List<String> split = Arrays.asList(substring1.split("],\\["));
+        System.out.println(split);
+    }
+
 }

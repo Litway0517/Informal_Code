@@ -244,4 +244,16 @@ public class HttpTest {
         System.out.println(split);
     }
 
+    @Test
+    public void testConvert() {
+        String str = "[100004,100004,\"XSDD000001\",\"C01半羊毛-0001\",\"平机半羊毛\",\"周艳姣\",\"周艳姣\",\"2023-05-19T17:10:10.92\",\"周艳姣\",\"2023-05-19T17:12:13.263\",\"m\"],[100005,100005,\"XSDD000002\",\"C01超细-0001\",\"平机超细白\",\"周艳姣\",\"周艳姣\",\"2023-05-26T11:12:41.59\",null,null,\"m\"],";
+        Object[] a = {"a", "你", "好", "", 1};
+        List<?> list = Convert.convert(List.class, a);
+        // 从4.1.11开始可以这么用
+        List<?> list1 = Convert.toList(a);
+
+        List<String> convert = Convert.convert(new TypeReference<List<String>>() {}, a);
+        System.out.println(convert);
+    }
+
 }

@@ -48,6 +48,9 @@ public class HttpTest {
         System.out.println(JSONUtil.toJsonPrettyStr(body));
     }
 
+    /**
+     * 测试实体类转换json字符串
+     */
     @Test
     public void testJson() {
         UserQuery userQuery = new UserQuery();

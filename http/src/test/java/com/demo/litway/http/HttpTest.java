@@ -71,6 +71,9 @@ public class HttpTest {
         System.out.println(s);
     }
 
+    /**
+     * 测试创建查询对象
+     */
     @Test
     public void testQuery() {
         OrderParams orderParams = new OrderParams();

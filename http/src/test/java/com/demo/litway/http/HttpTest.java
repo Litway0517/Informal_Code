@@ -100,6 +100,9 @@ public class HttpTest {
         System.out.println(json);
     }
 
+    /**
+     * 测试登录接口
+     */
     @Test
     public void testApi() {
         OrderParams orderParams = new OrderParams();

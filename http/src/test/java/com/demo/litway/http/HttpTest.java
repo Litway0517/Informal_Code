@@ -131,6 +131,9 @@ public class HttpTest {
         System.out.println(body);
     }
 
+    /**
+     * 测试查询接口
+     */
     @Test
     public void testGet() {
         HashMap<String, Object> paramMap = new HashMap<>();

@@ -149,6 +149,9 @@ public class HttpTest {
 
     }
 
+    /**
+     * 测试登录接口
+     */
     @Test
     public void testWebApiLogin() {
         LoginQuery loginQuery = new LoginQuery();

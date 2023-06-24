@@ -238,6 +238,9 @@ public class HttpTest {
 
     }
 
+    /**
+     * 测试json串转换为bean实体类
+     */
     @Test
     public void testJsonToBean() {
         LoginQuery loginQuery = new LoginQuery();
